@@ -1,20 +1,25 @@
 import React, {Component} from 'react';
-import './itemList.css';
+import styled from 'styled-components';
+
+const List = styled.ul`
+    background-color: #fff;
+`;
+
 export default class ItemList extends Component {
 
     render() {
         return (
-            <ul className="item-list list-group">
-                <li className="list-group-item">
+            <List>
+                <li>
                     John Snow
                 </li>
-                <li className="list-group-item">
+                <li>
                     Brandon Stark
                 </li>
-                <li className="list-group-item">
+                <li>
                     Geremy
                 </li>
-            </ul>
+            </List>
         );
     }
 }

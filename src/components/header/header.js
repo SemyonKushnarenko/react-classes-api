@@ -30,18 +30,22 @@ const Header = () => {
     return (
         <HeaderBlock>
             <HeaderTitle>
+                {/* eslint-disable-next-line  */}
                 <a href="#">
                 Game of Thrones DB
                 </a>
             </HeaderTitle>
             <HeaderLinks>
                 <li>
+                {/* eslint-disable-next-line  */}
                     <a href="#">Characters</a>
                 </li>
                 <li>
+                {/* eslint-disable-next-line  */}
                     <a href="#">Houses</a>
                 </li>
                 <li>
+                {/* eslint-disable-next-line  */}
                     <a href="#">Books</a>   
                 </li>
             </HeaderLinks>
