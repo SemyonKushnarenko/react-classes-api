@@ -3,7 +3,6 @@ import Header from '../header'
 import RandomChar from '../randomChar'
 import ItemList from '../itemList'
 import CharDetails from '../charDetails'
-import TogglerRandomChar from '../togglerRandomChar'
 
 export default class App extends Component{
     state = {
@@ -19,11 +18,13 @@ export default class App extends Component{
     render() {
         const {displayRandomChar} = this.state
         const randomChar = displayRandomChar?<RandomChar/>:null
+        const toggleNote = displayRandomChar?'Close':'Show another' 
         return (
             <> 
                 <Header />
                 {randomChar}
-                <TogglerRandomChar onToggleRandomChar={this.onToggleRandomChar} show={displayRandomChar}/>
+                <button
+                    onClick={this.onToggleRandomChar}>{toggleNote}</button>
                 <ItemList />
                 <CharDetails />
             </>
