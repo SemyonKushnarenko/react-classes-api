@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import styled from 'styled-components'
-import GotService from '../../services/gotService'
+import gotService from '../../services/gotService'
 import Spinner from '../spinner'
 import Error from '../error'
 
@@ -20,16 +20,10 @@ const RandomBlock = styled.div`
     ul{
         list-style: none;
     }
-`,
-Term = styled.span`font-weight: bold;`
+`
 
 export default class RandomChar extends Component {
-    constructor() {
-        super()
-        this.updateData()
-    }
-
-    gotService = new GotService()
+    gotService = new gotService()
     state = {
         char: {},
         loading: true,
@@ -50,17 +44,25 @@ export default class RandomChar extends Component {
     }
 
     updateData = () => {
-        const id = Math.round(Math.random()*140 + 25)//25-165
+        const id = Math.round(Math.random()*140 + 40)//40-180
         this.gotService.getCharacter(id)
             .then(this.onCharLoaded)
             .catch(this.onError)
+    }
+
+    componentDidMount() {
+        this.updateData()
+        this.timerId = setInterval(this.updateData, 3000)
+    }
+    componentWillUnmount() {
+        clearInterval(this.timerId)
     }
 
     render() {
         const {char, loading, errorStatus} = this.state
         
         const spinner = loading?<Spinner/>:null
-        const content = !loading&&!errorStatus?<View char={char}/>:null
+        const content = !loading&&!errorStatus?<DisplayingChar char={char} note="Random character:"/>:null
         const error = errorStatus?<Error errorMessage="Sorry, but no info"/>:null
 
         return (
@@ -72,12 +74,14 @@ export default class RandomChar extends Component {
         )
     }
 }
+const Term = styled.span`font-weight: bold;`
 
-const View = ({char}) => {
-    const {name, gender, born, died, culture} = char;
+const DisplayingChar = ({char, note, fields}) => {
+    const {name, gender, born, died} = char;
+    // const items = fields.map()
     return (
         <>
-            <h3>Random Character: <br/>{name}</h3>
+            <h3>{note}<br/>{name}</h3>
             <ul>
                 <li>
                     <Term>Gender </Term>
@@ -89,12 +93,9 @@ const View = ({char}) => {
                 </li>
                 <li>
                     <Term>Died </Term>
-                    <span>{died?died:'No info'}</span>
+                    <span>{died}</span>
                 </li>
-                <li>
-                    <Term>Culture </Term>
-                    <span>{culture}</span>
-                </li>
+                
             </ul>
         </>
     )

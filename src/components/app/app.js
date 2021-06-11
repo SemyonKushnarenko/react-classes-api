@@ -1,13 +1,15 @@
 import React, {Component} from 'react'
 import Header from '../header'
 import RandomChar from '../randomChar'
-import ItemList from '../itemList'
-import CharDetails from '../charDetails'
+import CharacterPage from '../pages/characterPage'
+import HousePage from '../pages/housePage/'
+import BookPage from '../pages/bookPage/'
 
 export default class App extends Component{
     state = {
         displayRandomChar: true
     }
+
 
     onToggleRandomChar = () => {
         this.setState(
@@ -24,9 +26,12 @@ export default class App extends Component{
                 <Header />
                 {randomChar}
                 <button
-                    onClick={this.onToggleRandomChar}>{toggleNote}</button>
-                <ItemList />
-                <CharDetails />
+                    onClick={this.onToggleRandomChar}>
+                    {toggleNote}
+                </button>
+                <CharacterPage />
+                <BookPage />
+                <HousePage />
             </>
         )
     }
