@@ -1,20 +1,19 @@
 import React from 'react';
-import styled from 'styled-components';
+import {BrowserRouter as Router, Link} from 'react-router-dom'
+import styled from 'styled-components'
 
 const HeaderBlock = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 80px;
-`;
-
-const HeaderTitle = styled.h3`
+`,
+HeaderTitle = styled.h3`
     font-size: 24px;
     color: #fff;
     margin: 0;
-`;
-
-const HeaderLinks = styled.ul`
+`,
+HeaderLinks = styled.ul`
     display: flex;
     margin: 0;
     align-items: center;
@@ -24,31 +23,29 @@ const HeaderLinks = styled.ul`
         margin-right: 20px;
         font-size: 18px;
     }
-`;
+`
 
 const Header = () => {
     return (
         <HeaderBlock>
+            <Router>
             <HeaderTitle>
-                {/* eslint-disable-next-line  */}
-                <a href="#">
+                <Link to="/">
                 Game of Thrones DB
-                </a>
+                </Link>
             </HeaderTitle>
             <HeaderLinks>
                 <li>
-                {/* eslint-disable-next-line  */}
-                    <a href="#">Characters</a>
+                    <Link to="/characters/">Characters</Link>
                 </li>
                 <li>
-                {/* eslint-disable-next-line  */}
-                    <a href="#">Houses</a>
+                    <Link to="/houses/">Houses</Link>
                 </li>
                 <li>
-                {/* eslint-disable-next-line  */}
-                    <a href="#">Books</a>   
+                    <Link to="/books/">Books</Link>   
                 </li>
             </HeaderLinks>
+            </Router>
         </HeaderBlock>
     );
 };

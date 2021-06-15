@@ -6,7 +6,7 @@ import Error from '../error'
 
 const RandomBlock = styled.div`
     background: linear-gradient(21deg, #2A4480, #263048);
-    box-shadow: -4px -4px 10px #D78F00, 4px 4px 10px #D78F00;
+    box-shadow: 0px 0px 10px #D78F00;
     max-width: 200px;
     height: 320px;
     border-radius: 20px;
@@ -76,9 +76,9 @@ export default class RandomChar extends Component {
 }
 const Term = styled.span`font-weight: bold;`
 
-const DisplayingChar = ({char, note, fields}) => {
-    const {name, gender, born, died} = char;
-    // const items = fields.map()
+const DisplayingChar = ({char, note}) => {
+    const {name, gender, born, died, culture} = char;
+    
     return (
         <>
             <h3>{note}<br/>{name}</h3>
@@ -94,6 +94,10 @@ const DisplayingChar = ({char, note, fields}) => {
                 <li>
                     <Term>Died </Term>
                     <span>{died}</span>
+                </li>
+                <li>
+                    <Term>Culture </Term>
+                    <span>{culture}</span>
                 </li>
                 
             </ul>

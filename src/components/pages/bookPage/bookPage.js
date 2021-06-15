@@ -1,26 +1,20 @@
 import React, {Component} from 'react'
 import ItemList from '../../itemList'
-import ItemDetails from '../../itemDetails'
-import Field from '../field'
+import {withRouter} from 'react-router-dom'
 import gotService from '../../../services/gotService'
 
-export default class BookPage extends Component {
+class BookPage extends Component {
     state = {
-        error: false,
-        itemId: null
+        error: false
     }
     gotService = new gotService()
-
-    onChangeItem = (index) => {
-        this.setState({itemId: index})
-    }
 
     componentDidCatch() {
         this.setState({error: true})
     }
 
     render() {
-        const {error, itemId} = this.state
+        const {error} = this.state
 
         if(error) return (
             <>
@@ -31,16 +25,13 @@ export default class BookPage extends Component {
         return (
             <div>
                 <ItemList getData={this.gotService.getAllBooks}
-                    onChangeItem={this.onChangeItem}
+                    onChangeItem={() => {
+                        this.props.history.push(this.props.itemId)
+                    }}
                     page='1'/>
-                <ItemDetails getItem={this.gotService.getBook}
-                    itemId={itemId} 
-                    label='book'>
-                    <Field label='Number of pages' field='numberOfPages'/>
-                    <Field label='Publisher' field='publisher'/>
-                    <Field label='Released' field='released'/>
-                </ItemDetails>
             </div>
         )
     }
 }
+
+export default withRouter(BookPage)
