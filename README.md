@@ -1,6 +1,5 @@
 Project using React classes, to get data from [Game of Thrones API](https://anapioficeandfire.com) and display it.
-Characters, books and houses. Now it isn't beautiful, but it will be ok in two weeks
-15.06.2021
+Characters, books and houses.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
