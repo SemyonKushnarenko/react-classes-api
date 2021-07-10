@@ -18,7 +18,7 @@ class BookPage extends Component {
 
         if(error) return (
             <>
-             <h2>Something goes wrong</h2>
+                <h2>Something goes wrong</h2>
             </>
         )
 

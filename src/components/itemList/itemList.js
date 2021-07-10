@@ -4,9 +4,17 @@ import Spinner from '../spinner';
 
 const List = styled.ul`
     background-color: #fff;
+    list-style: none;
+    font-size: 18px;
+    padding: 0;
+    width: 300px;
+    display: inline-block;
 `,
 ListItem = styled.li`
     cursor: pointer;
+    text-align: center;
+    border: 1px solid black;
+    padding: 15px;
 `
 
 export default class ItemList extends Component {

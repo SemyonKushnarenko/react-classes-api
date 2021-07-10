@@ -29,22 +29,22 @@ const Header = () => {
     return (
         <HeaderBlock>
             <Router>
-            <HeaderTitle>
-                <Link to="/">
-                Game of Thrones DB
-                </Link>
-            </HeaderTitle>
-            <HeaderLinks>
-                <li>
-                    <Link to="/characters/">Characters</Link>
-                </li>
-                <li>
-                    <Link to="/houses/">Houses</Link>
-                </li>
-                <li>
-                    <Link to="/books/">Books</Link>   
-                </li>
-            </HeaderLinks>
+                <HeaderTitle>
+                    <Link to="/">
+                    Game of Thrones DB
+                    </Link>
+                </HeaderTitle>
+                <HeaderLinks>
+                    <li>
+                        <Link to="/characters/">Characters</Link>
+                    </li>
+                    <li>
+                        <Link to="/houses/">Houses</Link>
+                    </li>
+                    <li>
+                        <Link to="/books/">Books</Link>   
+                    </li>
+                </HeaderLinks>
             </Router>
         </HeaderBlock>
     );

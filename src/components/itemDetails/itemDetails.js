@@ -11,7 +11,6 @@ const ItemDet = styled.div`
     height: 320px;
     border-radius: 20px;
     padding: 25px 25px 15px 25px;
-    margin: 40px auto;
     color: #FFEFD0;
     h3 {
         margin-bottom: 20px;
