@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
 import gotService from '../../services/gotService'
 import Spinner from '../spinner'
@@ -22,58 +22,52 @@ const RandomBlock = styled.div`
     }
 `
 
-export default class RandomChar extends Component {
-    gotService = new gotService()
-    state = {
-        char: {},
-        loading: true,
-        errorStatus: false
+export default function RandomChar() {
+    
+    const gotServices = new gotService()
+
+    const [char, setChar] = useState({})
+    const [loading, setLoading] = useState(true)
+    const [errorStatus, setErrorStatus] = useState(false)
+
+    let timerId = null
+
+    useEffect(() => {
+        updateData()
+        timerId = setInterval(updateData, 3000)
+        return () => {clearInterval(timerId)}
+    })
+
+    function onCharLoaded(char) {
+        setChar(char)
+        setLoading(false)
     }
 
-    onCharLoaded = (char) => {
-        this.setState({
-            char,
-            loading: false
-        })
-    }
-    onError = () => {
-        this.setState({
-            errorStatus: true,
-            loading: false
-        })
+    function onError() {
+        setLoading(false)
+        setErrorStatus(true)
     }
 
-    updateData = () => {
+    function updateData() {
         const id = Math.round(Math.random()*140 + 40)//40-180
-        this.gotService.getCharacter(id)
-            .then(this.onCharLoaded)
-            .catch(this.onError)
+        gotServices.getCharacter(id)
+            .then(onCharLoaded)
+            .catch(onError)
     }
+    
+    const spinner = loading?<Spinner/>:null
+    const content = !loading&&!errorStatus?<DisplayingChar char={char} note="Random character:"/>:null
+    const error = errorStatus?<Error errorMessage="Sorry, but no info"/>:null
 
-    componentDidMount() {
-        this.updateData()
-        this.timerId = setInterval(this.updateData, 3000)
-    }
-    componentWillUnmount() {
-        clearInterval(this.timerId)
-    }
-
-    render() {
-        const {char, loading, errorStatus} = this.state
-        
-        const spinner = loading?<Spinner/>:null
-        const content = !loading&&!errorStatus?<DisplayingChar char={char} note="Random character:"/>:null
-        const error = errorStatus?<Error errorMessage="Sorry, but no info"/>:null
-
-        return (
-            <RandomBlock>
-                {spinner}
-                {error}
-                {content}
-            </RandomBlock>
-        )
-    }
+    return (
+        <RandomBlock>
+            {spinner}
+            {error}
+            {content}
+        </RandomBlock>
+    )
 }
+
 const Term = styled.span`font-weight: bold;`
 
 const DisplayingChar = ({char, note}) => {

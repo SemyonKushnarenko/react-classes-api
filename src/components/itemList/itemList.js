@@ -1,6 +1,7 @@
-import React, {Component} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import Spinner from '../spinner';
+import Error from '../error';
 
 const List = styled.ul`
     background-color: #fff;
@@ -17,44 +18,45 @@ ListItem = styled.li`
     padding: 15px;
 `
 
-export default class ItemList extends Component {
-    state = {
-        itemList: null
-    }
+export default function ItemList({page, onChangeItem, getData}){
+    const [itemList, setItemList] = useState(null)
 
 
-    componentDidMount() {
-        this.props.getData(this.props.page)
-            .then(this.onCharListLoaded)
-            .catch(this.onError)
-    }
-
-    onCharListLoaded = (itemList) => {
-        this.setState({itemList})
-    }
-
-    render() {
-        const {itemList} = this.state
-        if (!itemList) {
-            return (
-                <Spinner/>
-            )
+    useEffect(() => {
+        getData(page)
+            .then(onCharListLoaded)
+            .catch(onError)
         }
+    )
 
-        const items = itemList.map((item, index) => {
-            return (
-                <ListItem
-                    key={item.key}
-                    onClick={() => this.props.onChangeItem(+this.props.page * 10 - 9 + index)}>
-                    {item.name}
-                </ListItem>
-            )
-        })
-
-        return (
-            <List>
-                {items}
-            </List>
-        );
+    function onCharListLoaded(itemList) {
+        setItemList(itemList)
     }
+
+    function onError() {
+        return <Error errorMessage='Something goes wrong'/>
+    }
+
+    if (!itemList) {
+        return (
+            <Spinner/>
+        )
+    }
+
+    const items = itemList.map((item, index) => {
+        return (
+            <ListItem
+                key={item.key}
+                onClick={() => onChangeItem(+page * 10 - 9 + index)}>
+                {item.name}
+            </ListItem>
+        )
+    })
+
+    return (
+        <List>
+            {items}
+        </List>
+    );
+    
 }

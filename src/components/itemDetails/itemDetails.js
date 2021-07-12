@@ -1,4 +1,4 @@
-import React, {cloneElement, Component} from 'react';
+import React, {cloneElement, useEffect, useState} from 'react';
 import styled from 'styled-components';
 
 const ItemDet = styled.div`
@@ -28,68 +28,56 @@ SelectError = styled.div`
 `;
 
 
-export default class ItemDetails extends Component {
-    state = {
-        item: null,
-        error: false
-    }
+export default function ItemDetails({label, children, itemId, getItem}) {
 
-    componentDidMount() {
-        this.updateItem()
-    }
+    const [item, setItem] = useState(null)
+    const [error, setError] = useState(false)
 
-    componentDidUpdate(prevProps){
-        if (prevProps !== this.props) this.updateItem()
-    }
+    useEffect(() => {
+        updateItem()
+    })
 
-    updateItem = () => {
-        const {itemId} = this.props
+    function updateItem() {
         if (!itemId) return
-        this.props.getItem(itemId)
-            .then(this.onUpdateItem)
-            .catch(this.onError)
+        getItem(itemId)
+            .then(onUpdateItem)
+            .catch(onError)
     }
 
-    onUpdateItem = (item) => {
-        this.setState({item})
+    function onUpdateItem(item) {
+        setItem(item)
     }
 
-    componentDidCatch() {
-        this.onError()
+    function onError() {
+        setError(true)
     }
 
-    onError = () => {
-        this.setState({
-            error: true
-        })
-    }
+    if (error) return (
+        <h2>
+            Something wrong with data. Please update page(
+        </h2>
+    ) 
 
-    render() {
-        const {item, error} = this.state
-        const {label} = this.props
-
-        if (error) return (
-            <h2>
-                Something wrong with data. Please update page(
-            </h2>
+    if (!item) {
+        return (
+            <SelectError>
+                Please, select a {label}
+            </SelectError>
         )
-
-        if (!item) {
-            return (
-                <SelectError>
-                    Please, select a {label}
-                </SelectError>
-            )
-        }
-        
-        const {name} = this.state.item
+    }
+    
+    const {name} = item
+    try{
         return (
             <ItemDet>
                 <h3>{name}</h3>
                 <ul>
-                    {React.Children.map(this.props.children, child => cloneElement(child, {item}))}
+                    {React.Children.map(children, child => cloneElement(child, {item}))}
                 </ul>
             </ItemDet>
         )
+    }
+    catch{
+        onError()
     }
 }
