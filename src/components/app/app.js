@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {BrowserRouter as Router, Route} from 'react-router-dom'
+import {Route, Switch} from 'react-router-dom'
 import Header from '../header'
 import RandomChar from '../randomChar'
 import CharacterPage from '../pages/characterPage'
@@ -43,14 +43,14 @@ export default class App extends Component{
                     onClick={this.onToggleRandomChar}>
                     {toggleNote}
                 </button>
-                <Router>
-                    <Route path="/characters" component={CharacterPage}/>
-                    <Route path="/houses" component={HousePage}/>
-                    <Route path="/books" exact component={BookPage}/>
-                    <Route path="/books/:id" component={({match}) => {
-                        return <BookItem itemId={match.params.id}/>
-                    }}/>
-                </Router>
+                    <Switch>    
+                        <Route path="/characters" component={CharacterPage}/>
+                        <Route path="/houses" component={HousePage}/>
+                        <Route path="/books/" exact component={BookPage}/>
+                        <Route path="/books/:id" render={({match}) => {
+                            return <BookItem itemId={match.params.id}/>
+                        }}/>
+                    </Switch>
             </AppDiv>
         )
     }

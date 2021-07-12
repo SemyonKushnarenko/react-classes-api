@@ -25,8 +25,9 @@ class BookPage extends Component {
         return (
             <div>
                 <ItemList getData={this.gotService.getAllBooks}
-                    onChangeItem={() => {
-                        this.props.history.push(this.props.itemId)
+                    onChangeItem={(id) => {
+                        this.props.history.push(`${id}`)
+                        console.log(id)
                     }}
                     page='1'/>
             </div>

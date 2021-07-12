@@ -42,7 +42,6 @@ export default class ItemList extends Component {
         }
 
         const items = itemList.map((item, index) => {
-            console.log(item.key)
             return (
                 <ListItem
                     key={item.key}
