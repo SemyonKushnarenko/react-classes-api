@@ -24,19 +24,17 @@ const RandomBlock = styled.div`
 
 export default function RandomChar() {
     
-    const gotServices = new gotService()
+    const gotServices = new gotService(),
 
-    const [char, setChar] = useState({})
-    const [loading, setLoading] = useState(true)
-    const [errorStatus, setErrorStatus] = useState(false)
-
-    let timerId = null
+    [char, setChar] = useState({}),
+    [loading, setLoading] = useState(true),
+    [errorStatus, setErrorStatus] = useState(false)
 
     useEffect(() => {
         updateData()
-        timerId = setInterval(updateData, 3000)
+        let timerId = setInterval(updateData, 15000)
         return () => {clearInterval(timerId)}
-    })
+    }, [])
 
     function onCharLoaded(char) {
         setChar(char)
@@ -53,11 +51,12 @@ export default function RandomChar() {
         gotServices.getCharacter(id)
             .then(onCharLoaded)
             .catch(onError)
+        console.log('working...')
     }
     
-    const spinner = loading?<Spinner/>:null
-    const content = !loading&&!errorStatus?<DisplayingChar char={char} note="Random character:"/>:null
-    const error = errorStatus?<Error errorMessage="Sorry, but no info"/>:null
+    const spinner = loading?<Spinner/>:null,
+    content = !loading&&!errorStatus?<DisplayingChar char={char} note="Random character:"/>:null,
+    error = errorStatus?<Error errorMessage="Sorry, but something goes wrong"/>:null
 
     return (
         <RandomBlock>
