@@ -1,5 +1,6 @@
 import React, {cloneElement, useEffect, useState} from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const ItemDet = styled.div`
     display: flex;
@@ -80,4 +81,12 @@ export default function ItemDetails({label, children, itemId, getItem}) {
     catch{
         onError()
     }
+}
+
+ItemDetails.defaultProps = {
+    label: 'item'
+}
+
+ItemDetails.propTypes = {
+    label: PropTypes.number
 }

@@ -1,5 +1,6 @@
 import React, {cloneElement, Component} from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const ItemDet = styled.div`
     display: flex;
@@ -92,4 +93,12 @@ export default class ItemDetails extends Component {
             </ItemDet>
         )
     }
+}
+
+ItemDetails.defaultProps = {
+    label: 'item'
+}
+
+ItemDetails.propTypes = {
+    label: PropTypes.number
 }
